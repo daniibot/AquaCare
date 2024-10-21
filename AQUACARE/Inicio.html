@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaCare</title>
+    <link rel="icon" href="Imagens/Logo.png" type="image/x-icon">
+    
+    <!-- Fuente de Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif; /* Fuente redonda y linda */
+            background-color: #f0f8ff; /* Celeste claro */
+            color: #333;
+        }
+
+        header {
+            background-color: #1e90ff; /* Azul */
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        form {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            font-weight: bold;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        button {
+            background-color: #1e90ff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #104e8b;
+        }
+
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        .success-message {
+            text-align: center;
+        }
+
+        /* Estilo para botón de "Ir para home" */
+        #goHomeBtn {
+            background-color: #1e90ff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 50%; /* Hacer el botón redondo */
+            width: 50px; /* Ajustar tamaño */
+            height: 50px;
+            cursor: pointer;
+        }
+
+        #goHomeBtn:hover {
+            background-color: #104e8b;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>AquaCare</h1>
+        <p>Plataforma de economia e racionamento de água</p>
+    </header>
+
+    <form id="loginForm">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="password">Senha</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="button" id="loginBtn">Entrar</button>
+
+        <p>Não tem uma conta? <a href="#" id="createAccountLink">Criar uma conta</a></p>
+    </form>
+
+    <form id="registerForm" style="display: none;">
+        <div class="step active" id="step1">
+            <label for="name">Digite seu nome</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="emailRegister">Digite seu email</label>
+            <input type="email" id="emailRegister" name="emailRegister" required>
+
+            <label for="city">Digite a cidade onde mora</label>
+            <input type="text" id="city" name="city" required>
+
+            <label for="state">Digite o Estado onde mora</label>
+            <input type="text" id="state" name="state" required>
+
+            <button type="button" onclick="nextStep(2)">Próximo</button>
+        </div>
+
+        <div class="step" id="step2">
+            <label for="waterTank">Caixa d´agua</label>
+            <select id="waterTank" name="waterTank" required>
+                <option value="1000l-5d">1000L - 5 dias</option>
+                <option value="1500l-7d">1500L - 7,5 dias</option>
+                <option value="2000l-10d">2000L - 10 dias</option>
+                <option value="apartment">Moro em apartamento</option>
+            </select>
+
+            <button type="button" onclick="nextStep(3)">Próximo</button>
+        </div>
+
+        <div class="step" id="step3">
+            <label for="washingMachine">Capacidade da máquina de lavar</label>
+            <select id="washingMachine" name="washingMachine" required>
+                <option value="10kg-135l">10kg - 135L</option>
+                <option value="11kg-168l">11kg - 168L</option>
+                <option value="17kg-197l">17kg - 197L</option>
+                <option value="noMachine">Não tenho</option>
+            </select>
+
+            <button type="button" onclick="nextStep(4)">Próximo</button>
+        </div>
+
+        <div class="step" id="step4">
+            <label for="dishWasher">Lava louça</label>
+            <select id="dishWasher" name="dishWasher" required onchange="showDishwasherUsage()">
+                <option value="no">Não tenho</option>
+                <option value="yes">Tenho</option>
+            </select>
+
+            <div id="dishwasherUsage" style="display: none;">
+                <label for="dishwasherTimes">Digite quantas vezes você a utiliza</label>
+                <input type="number" id="dishwasherTimes" name="dishwasherTimes" required>
+            </div>
+
+            <button type="button" onclick="nextStep(5)">Próximo</button>
+        </div>
+
+        <div class="step" id="step5">
+            <label for="waterConsumption">Consumo de água por dia</label>
+            <select id="waterConsumption" name="waterConsumption" required>
+                <option value="2l">2 litros</option>
+                <option value="2.5l">2.5 litros</option>
+                <option value="3l">3 litros</option>
+                <option value="more">Mais</option>
+            </select>
+
+            <button type="button" onclick="finishRegistration()">Finalizar</button>
+        </div>
+    </form>
+
+    <!-- Mensaje de bienvenida después de completar el registro -->
+    <div id="welcomeMessage" class="success-message" style="display: none;">
+        <h2 id="welcomeText"></h2>
+        <button id="goHomeBtn" onclick="goToHome()">&#x2192;</button> <!-- Botón pequeño y redondeado -->
+    </div>
+
+    <script>
+        let userName = '';
+
+        // Función para mostrar el formulario de creación de cuenta
+        document.getElementById('createAccountLink').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'block';
+        });
+
+        // Función para ir al siguiente paso en la creación de cuenta
+        function nextStep(stepNumber) {
+            // Validar el paso actual antes de avanzar
+            const currentStep = document.querySelector('.step.active');
+            const inputs = currentStep.querySelectorAll('input, select');
+            for (const input of inputs) {
+                if (!input.checkValidity()) {
+                    input.reportValidity();
+                    return;
+                }
+            }
+
+            // Si todo es válido, avanzar
+            var steps = document.getElementsByClassName('step');
+            for (var i = 0; i < steps.length; i++) {
+                steps[i].classList.remove('active');
+            }
+            document.getElementById('step' + stepNumber).classList.add('active');
+
+            // Guardar el nombre del usuario en la variable cuando se complete el primer paso
+            if (stepNumber === 2) {
+                userName = document.getElementById('name').value;
+            }
+        }
+
+        // Mostrar el campo de uso de la lavadora de platos si se selecciona "Tengo"
+        function showDishwasherUsage() {
+            var dishwasher = document.getElementById('dishWasher');
+            var usageField = document.getElementById('dishwasherUsage');
+            if (dishwasher.value === 'yes') {
+                usageField.style.display = 'block';
+            } else {
+                usageField.style.display = 'none';
+            }
+        }
+
+        // Finalizar registro, mostrar mensaje de bienvenida y redirigir a home.html
+        function finishRegistration() {
+            if (document.getElementById('registerForm').checkValidity()) {
+                document.getElementById('registerForm').style.display = 'none';
+                document.getElementById('welcomeMessage').style.display = 'block';
+                document.getElementById('welcomeText').textContent = 'Bem-vindo(a), ' + userName + '!';
+
+                // Redirigir a home.html
+                setTimeout(function() {
+                    window.location.href = 'home.html';
+                }, 2000); // Redirige después de 2 segundos
+            } else {
+                alert('Por favor, complete todos os campos obrigatórios.');
+            }
+        }
+
+        // Manejar el evento de inicio de sesión
+        document.getElementById('loginBtn').addEventListener('click', function() {
+            // Aquí puedes implementar la lógica real de inicio de sesión
+            alert('Iniciando sessão...'); 
+            
+            // Redirigir a home.html
+            window.location.href = 'home.html';
+        });
+
+        // Ir a la página de inicio
+        function goToHome() {
+            window.location.href = 'home.html';
+        }
+    </script>
+</body>
+</html>

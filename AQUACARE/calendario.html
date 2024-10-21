@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendário - AquaCare</title>
+    <link rel="icon" href="Imagens/Logo.png" type="image/x-icon"> 
+
+    <!-- Fuente de Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <!-- Íconos de Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f8ff; /* Fondo celeste claro */
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        header {
+            background-color: #1e90ff; /* Azul para el header */
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header img {
+            height: 40px; /* Tamaño del logo */
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: white;
+            display: inline-block;
+            margin-left: 10px; /* Espacio entre logo y nombre */
+        }
+
+        .search-bar {
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .search-bar input {
+            width: 50%;
+            padding: 10px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .three-dots {
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Íconos a la izquierda del perfil */
+        .icon-bar {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .icon-bar .material-icons {
+            font-size: 30px;
+            color: white;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        /* Contenedor principal */
+        .container {
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Recuadro azul con el texto */
+        .blue-box {
+            width: 300px;
+            height: 150px;
+            background-color: #1e90ff;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 50px auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .blue-box h2 {
+            color: white;
+            font-size: 20px;
+            margin: 0;
+        }
+
+        /* Recuadro blanco para la ciudad */
+        .city-box {
+            width: 300px;
+            height: 50px;
+            background-color: white;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            font-size: 18px;
+            color: #1e90ff;
+        }
+
+        /* Estilos para el calendario */
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin: 30px auto;
+            max-width: 500px;
+        }
+
+        .day {
+            padding: 10px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            position: relative;
+            font-size: 18px; /* Tamaño de fuente */
+        }
+
+        .rainy {
+            background-color: #e0f7fa; /* Color de fondo para días con lluvia */
+        }
+
+        .rainy::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #1e90ff; /* Color de la bolita de lluvia */
+        }
+
+        .dry::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: 2px solid #1e90ff; /* Círculo sin relleno */
+        }
+
+        /* Referencias */
+        .references {
+            margin-top: 20px;
+            font-size: 16px;
+            text-align: center; /* Centrar el texto de las referencias */
+        }
+
+        .reference {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 5px 0;
+        }
+
+        .reference span {
+            margin-left: 8px; /* Espacio entre el ícono y el texto */
+        }
+
+        .circle {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: 2px solid #1e90ff; /* Círculo sin relleno */
+            display: inline-block;
+        }
+
+        .filled-circle {
+            background-color: #1e90ff; /* Bolita de lluvia rellena */
+            border: none;
+            width: 10px; /* Aseguramos que el tamaño sea igual al círculo vacío */
+            height: 10px; /* Aseguramos que el tamaño sea igual al círculo vacío */
+            display: inline-block;
+            margin-right: 8px; /* Espacio a la izquierda del texto */
+        }
+
+        /* Estilo para el texto de recordatorio */
+        .reminder {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #1e90ff; /* Texto en azul */
+        }
+        .logo-container {
+          text-decoration: none; /* Quita el subrayado */
+          color: inherit; /* Mantiene el color del texto */
+         }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="home.html" class="logo-container" style="display: flex; align-items: center;">
+            <img src="Imagens/Logo.png" alt="Logo AquaCare">
+            <h1>AquaCare</h1>
+        </a>        
+
+        <div class="search-bar">
+            <input type="text" placeholder="Pesquisar...">
+        </div>
+
+        <!-- Barra de íconos a la izquierda del perfil -->
+        <div class="icon-bar">
+            <a href="calendario.html">
+                <span class="material-icons">calendar_today</span>
+            </a>
+            <a href="relogio.html">
+                <span class="material-icons">alarm</span>
+            </a>
+            <a href="pontos.html"> <!-- Redirección a perfil.html -->
+                <span class="material-icons">settings</span>
+            </a>
+        </div>    
+        <div class="profile">
+            <a href="perfil.html">
+                <img id="profileImage" src="Imagens/profile-placeholder.png" alt="Imagem do Usuário">
+                <div class="three-dots">⋮</div>
+            </a>
+        </div>
+    </header>
+    
+    <script>
+        // Função para carregar a imagem do perfil guardada
+        function loadProfileImage() {
+            const profileImage = document.getElementById('profileImage');
+            const savedImage = localStorage.getItem('profileImage');
+            if (savedImage) {
+                profileImage.src = savedImage;
+            }
+        }
+    
+        // Carregar a imagem do perfil quando a página for carregada
+        window.onload = loadProfileImage;
+    </script>
+    <div class="container">
+        <!-- Recuadro azul con el texto central -->
+        <div class="blue-box">
+            <h2>Acompanhe os dias de chuva na sua região</h2>
+        </div>
+
+        <!-- Recuadro blanco para el nombre de la ciudad -->
+        <div class="city-box">
+            <p id="city-name">Sua cidade: Sem definir</p> <!-- Puedes cambiar "São Paulo" por la ciudad elegida -->
+        </div>
+
+        <!-- Calendario -->
+        <div id="calendar" class="calendar"></div>
+
+        <!-- Referencias -->
+        <div class="references">
+            <div class="reference">
+                <div class="filled-circle"></div>
+                <span>Días de chuva</span>
+            </div>
+            <div class="reference">
+                <div class="circle"></div>
+                <span>Días secos</span>
+            </div>
+        </div>
+
+        <!-- Texto de recordatorio -->
+        <div class="reminder">Adicione um lembrete no seu calendário</div>
+    </div>
+
+    <script>
+        // Obtener el mes y año actuales
+        const date = new Date();
+        const month = date.getMonth(); // 0 = enero
+        const year = date.getFullYear();
+
+        // Días con lluvia (ejemplo)
+        const rainyDays = [];
+        const dryDays = [];
+
+        // Generar días aleatorios para lluvia y sequía
+        for (let day = 1; day <= 31; day++) {
+            const randomNum = Math.random();
+            if (day <= 31) {
+                if (randomNum < 0.3) { // 30% de probabilidad de lluvia
+                    rainyDays.push(day);
+                } else {
+                    dryDays.push(day);
+                }
+            }
+        }
+
+        // Días de la semana
+        const weekdays = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'];
+
+        // Crear el calendario
+        function createCalendar(month, year) {
+            const calendarElement = document.getElementById('calendar');
+            calendarElement.innerHTML = ''; // Limpiar el calendario
+
+            // Agregar encabezado de días
+            weekdays.forEach(day => {
+                const headerCell = document.createElement('div');
+                headerCell.classList.add('day');
+                headerCell.textContent = day;
+                calendarElement.appendChild(headerCell);
+            });
+
+            // Obtener el primer día del mes
+            const firstDay = new Date(year, month, 1).getDay();
+            const totalDays = new Date(year, month + 1, 0).getDate(); // Total de días en el mes
+
+            // Agregar espacios vacíos para los días antes del primer día del mes
+            for (let i = 0; i < firstDay; i++) {
+                const emptyCell = document.createElement('div');
+                calendarElement.appendChild(emptyCell);
+            }
+
+            // Agregar días al calendario
+            for (let day = 1; day <= totalDays; day++) {
+                const dayCell = document.createElement('div');
+                dayCell.classList.add('day');
+
+                dayCell.textContent = day;
+
+                // Marcar días de lluvia
+                if (rainyDays.includes(day)) {
+                    dayCell.classList.add('rainy');
+                } else {
+                    dayCell.classList.add('dry');
+                }
+
+                calendarElement.appendChild(dayCell);
+            }
+        }
+
+        // Crear el calendario al cargar la página
+        createCalendar(month, year);
+    </script>
+</body>
+</html>

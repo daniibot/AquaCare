@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - AquaCare</title>
+    <link rel="icon" href="Imagens/Logo.png" type="image/x-icon"> 
+
+    <!-- Fuente de Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <!-- Íconos de Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f8ff; /* Fondo celeste claro */
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        header {
+            background-color: #1e90ff; /* Azul para el header */
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header img {
+            height: 40px; /* Tamaño del logo */
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: white;
+            display: inline-block;
+            margin-left: 10px; /* Espacio entre logo y nombre */
+        }
+
+        .search-bar {
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .search-bar input {
+            width: 50%;
+            padding: 10px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .three-dots {
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Íconos a la izquierda del perfil */
+        .icon-bar {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .icon-bar .material-icons {
+            font-size: 30px;
+            color: white;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        /* Estructura principal */
+        .container {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .title {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        /* Estilo para la bola de agua */
+        .content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .water-circle {
+            width: 150px;
+            height: 150px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin: 0 20px 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .water-circle .litros {
+            position: absolute;
+            top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            z-index: 1;
+        }
+
+        .water-circle::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 50%;
+            background-color: #1e90ff; /* Color del agua */
+            border-bottom-left-radius: 50%;
+            border-bottom-right-radius: 50%;
+        }
+
+        /* Cuadrados redondeados */
+        .rounded-box {
+            width: 200px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            margin: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            font-size: 18px;
+        }
+
+        .rounded-box.blue {
+            background-color: #1e90ff; /* Color del agua disponible */
+            color: white;
+        }
+
+        .content-right {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .rounded-box.lightblue {
+            background-color: #87cefa; /* Celeste para meta diaria */
+            color: white;
+        }
+
+        /* Opciones de ahorro por día */
+        .day-options {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .day-option {
+            background-color: #f0f8ff; /* Fondo celeste claro */
+            padding: 10px;
+            width: 60px;
+            text-align: center;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+        }
+
+        .day-option.active {
+            background-color: #1e90ff; /* Azul cuando está seleccionado */
+            color: white;
+        }
+
+        /* Hover para el Día 1 */
+        .day-option:first-child:hover {
+            background-color: #1e90ff;
+            color: white;
+        }
+        .logo-container {
+          text-decoration: none; /* Quita el subrayado */
+          color: inherit; /* Mantiene el color del texto */
+         }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="home.html" class="logo-container" style="display: flex; align-items: center;">
+            <img src="Imagens/Logo.png" alt="Logo AquaCare">
+            <h1>AquaCare</h1>
+        </a>
+        
+
+        <div class="search-bar">
+            <input type="text" placeholder="Pesquisar...">
+        </div>
+
+        <!-- Barra de íconos a la izquierda del perfil -->
+        <div class="icon-bar">
+            <a href="calendario.html">
+                <span class="material-icons">calendar_today</span>
+            </a>
+            <a href="relogio.html">
+                <span class="material-icons">alarm</span>
+            </a>
+            <a href="pontos.html"> <!-- Redirección a perfil.html -->
+                <span class="material-icons">settings</span>
+            </a>
+        </div>
+
+        <div class="profile">
+            <a href="perfil.html">
+                <img id="profileImage" src="Imagens/profile-placeholder.png" alt="Imagem do Usuário">
+                <div class="three-dots">⋮</div>
+            </a>
+        </div>
+    </header>
+    
+    <script>
+        // Função para carregar a imagem do perfil guardada
+        function loadProfileImage() {
+            const profileImage = document.getElementById('profileImage');
+            const savedImage = localStorage.getItem('profileImage');
+            if (savedImage) {
+                profileImage.src = savedImage;
+            }
+        }
+    
+        // Carregar a imagem do perfil quando a página for carregada
+        window.onload = loadProfileImage;
+    </script>
+
+    <div class="container">
+        <!-- Título -->
+        <h2 class="title">Litros na sua caixa de água</h2>
+
+        <!-- Bola con agua y los cuadrados a la derecha -->
+        <div class="content">
+            <!-- Bola de agua -->
+            <div class="water-circle">
+                <div class="litros">800L</div>
+            </div>
+
+            <!-- Cuadrados a la derecha -->
+            <div class="content-right">
+                <!-- Primer cuadrado: Agua gasta -->
+                <div class="rounded-box">Água gasta</div>
+
+                <!-- Segundo cuadrado: Agua disponível -->
+                <div class="rounded-box blue">Água disponível</div>
+            </div>
+        </div>
+
+        <!-- Tercer cuadrado: Meta diaria -->
+        <div class="rounded-box lightblue" style="width: 250px; margin: 20px auto;">Meta diaria</div>
+
+        <!-- Cuarto cuadrado: Vamos economizar água hoje? -->
+        <div class="rounded-box" style="width: 250px; margin: 20px auto;">Vamos economizar água hoje?</div>
+
+        <!-- Opciones por día -->
+        <div class="day-options">
+            <div class="day-option" onclick="window.location.href='dia1.html'">Dia 1</div>
+            <div class="day-option">Dia 2</div>
+            <div class="day-option">Dia 3</div>
+            <div class="day-option">Dia 4</div>
+            <div class="day-option">Dia 5</div>
+            <div class="day-option">Dia 6</div>
+            <div class="day-option">Dia 7</div>
+        </div>
+    </div>
+
+</body>
+</html>
